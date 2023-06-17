@@ -1,0 +1,58 @@
+```{r}
+library(dplyr)
+library(gapminder)
+
+dataset_results <- read.csv2("primary_results.csv")
+
+dataset_results %>%
+  filter(candidate=="Hillary Clinton" | candidate=="Donald Trump")
+dataset_results %>%
+  filter(party=="Democrat" & county=="Shelby")
+
+dataset_results %>%
+  filter(state=="Alabama" & votes>15000)
+
+
+```
+
+3. function and arrange select
+
+```{r}
+new_data <- select(dataset_results,state,county,party,candidate,votes,county)
+
+new_data %>%
+  filter(county=="Denton" & state=="Texas")%>%
+  arrange(desc(votes))
+```
+
+4
+
+```{r}
+dataset_results %>%
+  filter(candidate=="Ted Cruz" & state=="Alaska") %>%
+  mutate(vote_count = as.numeric(votes) / as.numeric(fraction_votes))%>%
+  arrange(desc(vote_count))
+
+
+dataset_results
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
