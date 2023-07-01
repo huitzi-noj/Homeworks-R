@@ -5,7 +5,6 @@ library(ggplot2)
 diamonds <- read_csv("diamonds.csv")
 
 str(diamonds)
-diamonds
 ```
 1. Dispersión
 ```{r}
@@ -23,6 +22,7 @@ ggplot(diamonds,aes(x=price)) + geom_histogram(bins=40)+scale_x_log10()
 
 BOXPLOTS
 ```{r}
+ggplot(diamonds,aes(x=cut,y=price))+geom_boxplot()+scale_y_log10() 
 ggplot(diamonds,aes(x=cut,y=price,fill=cut))+geom_boxplot()+scale_y_log10() 
 ```
 
@@ -33,6 +33,7 @@ filter_price <- diamonds %>%
   filter(price > 1000 & (cut=="Good" | cut =="Ideal" | cut=="Premium"))
 filter_price
 ggplot(filter_price,aes(x=cut,y=depth))+geom_col()+facet_wrap(~ clarity)
+ggplot(filter_price,aes(x=cut,y=depth,fill=clarity))+geom_col()+facet_wrap(~ clarity)
 ```
 
 Grouping and summarizing
