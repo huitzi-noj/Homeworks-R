@@ -44,12 +44,22 @@ answer_counts <- answers %>%
   count(question_id)%>%
   arrange(question_id)
 
-answer_counts %>%
-  left_join(questions, by = c("question_id","id"))
+question_answer_counts <- answer_counts %>%
+  left_join(questions, by = c("question_id"="id"))%>%
+  replace_na(replace =list(n=0))
 
-questions
-answer_counts
-answers
+question_answer_counts
+
+```
+5. joinin question
+
+```{r}
+joining_question <- qtags %>%
+  inner_join(question_answer_counts,by="question_id")%>%
+  inner_join(tags,by =c("question_id"="id"))
+
+tags
+joining_question
 ```
 
 
