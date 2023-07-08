@@ -1,0 +1,78 @@
+1.
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+
+questions <- read_csv("questions.csv")
+answers <- read_csv("answers.csv")
+tags <- read_csv("tags.csv")
+qtags <- read_csv("question_tags.csv")
+
+questions_with_tags <- questions %>%
+  inner_join(qtags, by = c("id" = "question_id"))%>%
+  inner_join(tags, by = c("tag_id"="id"))
+
+questions_with_tags <- replace_na(questions_with_tags,replace=list(tag_name="only-r"))
+
+
+questions_with_tags
+```
+2. comparing scores
+
+```{r}
+questions_with_tags %>%
+  group_by(tag_name)%>%
+  summarise(mean_score=mean(score))%>%
+  arrange(desc(mean_score))
+```
+
+3. Find gaps
+
+```{r}
+find_gaps <- questions %>%
+  inner_join(answers, by = c("id"="question_id"))%>%
+  mutate(gap=creation_date.y - creation_date.x)
+find_gaps
+```
+
+4. join question
+
+```{r}
+answer_counts <- answers %>%
+  count(question_id)%>%
+  arrange(question_id)
+
+answer_counts %>%
+  left_join(questions, by = c("question_id","id"))
+
+questions
+answer_counts
+answers
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
